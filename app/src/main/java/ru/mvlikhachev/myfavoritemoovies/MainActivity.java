@@ -7,6 +7,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -15,16 +16,22 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import ru.mvlikhachev.myfavoritemoovies.Model.Genre;
 import ru.mvlikhachev.myfavoritemoovies.Model.Movie;
 import ru.mvlikhachev.myfavoritemoovies.ViewModel.MainActivityViewModel;
+import ru.mvlikhachev.myfavoritemoovies.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
     private MainActivityViewModel mainActivityViewModel;
+    private ActivityMainBinding activityMainBinding;
+    private MainActivityClickHandlers mainActivityClickHandlers;
+    private Genre selectedGenre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +40,21 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        activityMainBinding = DataBindingUtil.setContentView(this,
+                R.layout.activity_main);
+
         mainActivityViewModel = new ViewModelProvider
                 .AndroidViewModelFactory(getApplication())
                 .create(MainActivityViewModel.class);
+
+        mainActivityClickHandlers = new MainActivityClickHandlers();
+        activityMainBinding.setClickHandlers(mainActivityClickHandlers);
 
         mainActivityViewModel.getGenres().observe(this, new Observer<List<Genre>>() {
             @Override
             public void onChanged(List<Genre> genres) {
                 for (Genre genre : genres) {
-                    Log.d("TAG", "Genre" + genre.getGenreName());
+                    Log.d("TAG", "Genre: " + genre.getGenreName());
                 }
             }
         });
@@ -51,19 +64,12 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(List<Movie> movies) {
 
                 for (Movie movie : movies) {
-                    Log.d("TAG", "Movie:" + movie.getMovieName());
+                    Log.d("TAG", "Movie: " + movie.getMovieName());
                 }
             }
         });
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
     }
 
     @Override
@@ -86,5 +92,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public class MainActivityClickHandlers {
+
+        public void onFabClicked(View view) {
+            Toast.makeText(MainActivity.this, "Buttons is clicked", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void onSelectedItem(AdapterView<?> parent, View view, int position, long id) {
+
+        selectedGenre = (Genre) parent.getItemAtPosition(position);
+
+        String message = "id is " + selectedGenre.getId() + "\n name is " + selectedGenre.getGenreName();
+
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+
     }
 }
