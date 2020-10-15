@@ -17,8 +17,10 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.mvlikhachev.myfavoritemoovies.Model.Genre;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding activityMainBinding;
     private MainActivityClickHandlers mainActivityClickHandlers;
     private Genre selectedGenre;
+    private ArrayList<Genre> genreArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +56,14 @@ public class MainActivity extends AppCompatActivity {
         mainActivityViewModel.getGenres().observe(this, new Observer<List<Genre>>() {
             @Override
             public void onChanged(List<Genre> genres) {
+
+                genreArrayList = (ArrayList<Genre>) genres;
+
                 for (Genre genre : genres) {
                     Log.d("TAG", "Genre: " + genre.getGenreName());
                 }
+
+                showInSpinner();
             }
         });
 
@@ -70,6 +78,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void showInSpinner() {
+
+        ArrayAdapter<Genre> genreArrayAdapter = new ArrayAdapter<Genre>(this,
+                R.layout.spinner_item, genreArrayList);
+        genreArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+        activityMainBinding.setSpinnerAdapter(genreArrayAdapter);
     }
 
     @Override
@@ -99,15 +115,17 @@ public class MainActivity extends AppCompatActivity {
         public void onFabClicked(View view) {
             Toast.makeText(MainActivity.this, "Buttons is clicked", Toast.LENGTH_SHORT).show();
         }
+
+        public void onSelectedItem(AdapterView<?> parent, View view, int position, long id) {
+
+            selectedGenre = (Genre) parent.getItemAtPosition(position);
+
+            String message = "id is " + selectedGenre.getId() + "\n name is " + selectedGenre.getGenreName();
+
+            Toast.makeText(parent.getContext(), message, Toast.LENGTH_SHORT).show();
+
+        }
     }
 
-    public void onSelectedItem(AdapterView<?> parent, View view, int position, long id) {
 
-        selectedGenre = (Genre) parent.getItemAtPosition(position);
-
-        String message = "id is " + selectedGenre.getId() + "\n name is " + selectedGenre.getGenreName();
-
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-
-    }
 }
