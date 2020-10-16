@@ -1,4 +1,4 @@
-package ru.mvlikhachev.myfavoritemoovies.Model;
+package ru.mvlikhachev.myfavoritemoovies.model;
 
 import android.content.Context;
 import android.os.AsyncTask;

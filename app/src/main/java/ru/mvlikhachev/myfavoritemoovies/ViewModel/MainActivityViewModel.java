@@ -8,9 +8,9 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import ru.mvlikhachev.myfavoritemoovies.Model.AppRepository;
-import ru.mvlikhachev.myfavoritemoovies.Model.Genre;
-import ru.mvlikhachev.myfavoritemoovies.Model.Movie;
+import ru.mvlikhachev.myfavoritemoovies.model.AppRepository;
+import ru.mvlikhachev.myfavoritemoovies.model.Genre;
+import ru.mvlikhachev.myfavoritemoovies.model.Movie;
 
 public class MainActivityViewModel extends AndroidViewModel {
 

@@ -1,4 +1,4 @@
-package ru.mvlikhachev.myfavoritemoovies.Model;
+package ru.mvlikhachev.myfavoritemoovies.model;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -8,8 +8,6 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import java.util.List;
-
-import ru.mvlikhachev.myfavoritemoovies.Model.Genre;
 
 @Dao
 public interface GenreDao {

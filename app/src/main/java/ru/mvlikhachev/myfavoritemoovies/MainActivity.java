@@ -2,9 +2,6 @@ package ru.mvlikhachev.myfavoritemoovies;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
@@ -23,8 +20,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.mvlikhachev.myfavoritemoovies.Model.Genre;
-import ru.mvlikhachev.myfavoritemoovies.Model.Movie;
+import ru.mvlikhachev.myfavoritemoovies.model.Genre;
+import ru.mvlikhachev.myfavoritemoovies.model.Movie;
 import ru.mvlikhachev.myfavoritemoovies.ViewModel.MainActivityViewModel;
 import ru.mvlikhachev.myfavoritemoovies.databinding.ActivityMainBinding;
 
