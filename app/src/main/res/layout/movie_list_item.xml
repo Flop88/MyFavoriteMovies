@@ -14,7 +14,8 @@
     <androidx.cardview.widget.CardView
 
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
         app:cardCornerRadius="4dp">
 
         <LinearLayout
@@ -38,7 +39,7 @@
                 android:id="@+id/descriptionTextView"
                 android:text="@{movie.movieDescription}"
                 android:textSize="24sp"
-                android:textStyle="bold"/>
+                android:textStyle="italic"/>
 
 
 
