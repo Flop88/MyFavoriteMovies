@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <data>
+
+        <variable
+            name="clickHandlers"
+            type="ru.mvlikhachev.myfavoritemoovies.AddEditActivity.AddEditcActivityClickHandlers" />
+
+        <variable
+            name="movie"
+            type="ru.mvlikhachev.myfavoritemoovies.model.Movie" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="4dp"
+        tools:context=".AddEditActivity">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/movieNameEditText"
+            android:hint="name"
+            android:text="@={movie.movieName}"
+            android:layout_marginTop="16dp"
+            android:textSize="24sp" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/movieDescriptionEditText"
+            android:hint="Description"
+            android:text="@={movie.movieDescription}"
+            android:layout_marginTop="16dp"
+            android:textSize="24sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/movieNameTextView"
+            android:text="name"
+            android:layout_marginTop="16dp"
+            android:textSize="24sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/movieDescriptionTextView"
+            android:text="Description"
+            android:layout_marginTop="16dp"
+            android:textSize="24sp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/okButton"
+            android:text="OK"
+            android:onClick="@{clickHandlers::onOkButtonClicked}"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:layout_marginTop="48dp"
+            />
+
+    </LinearLayout>
+
+</layout>
