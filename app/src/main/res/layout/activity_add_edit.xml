@@ -23,12 +23,26 @@
         android:padding="4dp"
         tools:context=".AddEditActivity">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/movieNameTextView"
+            android:text="name"
+            android:layout_marginTop="16dp"
+            android:textSize="24sp" />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/movieNameEditText"
             android:hint="name"
             android:text="@={movie.movieName}"
+            android:layout_marginTop="16dp"
+            android:textSize="24sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/movieDescriptionTextView"
+            android:text="Description"
             android:layout_marginTop="16dp"
             android:textSize="24sp" />
         <EditText
@@ -39,20 +53,8 @@
             android:text="@={movie.movieDescription}"
             android:layout_marginTop="16dp"
             android:textSize="24sp" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/movieNameTextView"
-            android:text="name"
-            android:layout_marginTop="16dp"
-            android:textSize="24sp" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/movieDescriptionTextView"
-            android:text="Description"
-            android:layout_marginTop="16dp"
-            android:textSize="24sp" />
+
+
 
         <Button
             android:layout_width="match_parent"

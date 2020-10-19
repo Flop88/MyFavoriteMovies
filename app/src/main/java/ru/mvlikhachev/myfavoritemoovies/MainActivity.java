@@ -3,11 +3,14 @@ package ru.mvlikhachev.myfavoritemoovies;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -107,6 +110,8 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+
     public class MainActivityClickHandlers {
 
         public void onFabClicked(View view) {
@@ -165,6 +170,56 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, EDIT_MOVIE_REQWUEST_COODE);
             }
         });
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+                Movie movieToDelete = movieArrayList.get(viewHolder.getAdapterPosition());
+                mainActivityViewModel.deleteNewMovie(movieToDelete);
+            }
+        }).attachToRecyclerView(recyclerView);
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        int selectedGenreId = selectedGenre.getId();
+
+        Log.d("REQUESTCODE", "ADD_MOVIE_REQWUEST_COODE: " + ADD_MOVIE_REQWUEST_COODE);
+        Log.d("REQUESTCODE", "EDIT_MOVIE_REQWUEST_COODE: " + EDIT_MOVIE_REQWUEST_COODE);
+        Log.d("REQUESTCODE", "RESULT_OK: " + RESULT_OK);
+        Log.d("REQUESTCODE", "RESULT_OK: " + RESULT_OK);
+
+        if (requestCode == ADD_MOVIE_REQWUEST_COODE && resultCode == RESULT_OK) {
+            Movie movie = new Movie();
+            movie.setGenreId(selectedGenreId);
+            movie.setMovieName(data.getStringExtra(AddEditActivity.MOVIE_NAME));
+            movie.setMovieDescription(data.getStringExtra(AddEditActivity.MOVIE_DESCRIPTION));
+
+            mainActivityViewModel.addNewMovie(movie);
+
+            Toast.makeText(this, "Added new movie", Toast.LENGTH_SHORT).show();
+        } else if (requestCode == EDIT_MOVIE_REQWUEST_COODE && resultCode == RESULT_OK) {
+
+            Movie movie = new Movie();
+            movie.setMovieId(selectedMovieId);
+            movie.setGenreId(selectedGenreId);
+            movie.setMovieName(data.getStringExtra(AddEditActivity.MOVIE_NAME));
+            movie.setMovieDescription(data.getStringExtra(AddEditActivity.MOVIE_DESCRIPTION));
+
+            mainActivityViewModel.updateNewMovie(movie);
+
+            Toast.makeText(this, "Edited new movie", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
