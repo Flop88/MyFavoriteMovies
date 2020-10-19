@@ -1,5 +1,6 @@
 package ru.mvlikhachev.myfavoritemoovies;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +30,9 @@ import ru.mvlikhachev.myfavoritemoovies.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final int ADD_MOVIE_REQWUEST_COODE = 111;
+    public static final int EDIT_MOVIE_REQWUEST_COODE = 222;
+
     private MainActivityViewModel mainActivityViewModel;
     private ActivityMainBinding activityMainBinding;
     private MainActivityClickHandlers mainActivityClickHandlers;
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Movie> movieArrayList;
     private RecyclerView recyclerView;
     private MovieAdapter movieAdapter;
+    private int selectedMovieId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +110,11 @@ public class MainActivity extends AppCompatActivity {
     public class MainActivityClickHandlers {
 
         public void onFabClicked(View view) {
-            Toast.makeText(MainActivity.this, "Buttons is clicked", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MainActivity.this, "Buttons is clicked",
+//                    Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, AddEditActivity.class);
+
+            startActivityForResult(intent, ADD_MOVIE_REQWUEST_COODE);
         }
 
         public void onSelectedItem(AdapterView<?> parent, View view, int position, long id) {
@@ -142,6 +151,20 @@ public class MainActivity extends AppCompatActivity {
         movieAdapter = new MovieAdapter();
         movieAdapter.setMovieArrayList(movieArrayList);
         recyclerView.setAdapter(movieAdapter);
+
+        movieAdapter.setOnItemClickListener(new MovieAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Movie movie) {
+                selectedMovieId = movie.getMovieId();
+
+                Intent intent = new Intent(MainActivity.this, AddEditActivity.class);
+                intent.putExtra(AddEditActivity.MOVIE_ID, selectedMovieId);
+                intent.putExtra(AddEditActivity.MOVIE_NAME, movie.getMovieName());
+                intent.putExtra(AddEditActivity.MOVIE_DESCRIPTION, movie.getMovieDescription());
+
+                startActivityForResult(intent, EDIT_MOVIE_REQWUEST_COODE);
+            }
+        });
     }
 
 }
